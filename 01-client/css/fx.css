@@ -1,0 +1,16 @@
+div.listing .item {
+	background-color: #e1e1e1;
+	padding: 2px 4px;
+	margin: 0 0 8px 0;
+}
+
+div.listing .item.hover,
+div.listing .item.hover h3
+{
+	background-color: #00B4FF;
+	color: white;
+}
+
+div.listing .item.clickable {
+	cursor: pointer;
+}

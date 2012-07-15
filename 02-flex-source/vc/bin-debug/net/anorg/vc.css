@@ -1,0 +1,23 @@
+/* CSS file */
+@namespace "http://www.adobe.com/2006/mxml";
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+global
+{
+	color: #333333;
+	font-family: Verdana;
+	font-size: 10;
+	cornerRadius: 0;
+	highlightAlphas: 0, 0;
+	fillColors: #ffffff, #ffffff, #ffffff, #ffffff;
+	borderColor: #333333;
+	themeColor: #00B4FF;
+}
+Button {
+	borderColor: #333333;
+	cornerRadius: 0;
+	font-family: Verdana;
+	font-size: 10;
+	font-weight: normal;
+}

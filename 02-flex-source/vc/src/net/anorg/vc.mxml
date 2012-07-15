@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:ChatController xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="780" minHeight="250" preloaderChromeColor="#181818"
+					  xmlns:local="*"
+					  height="380" width="770"
+					  backgroundColor="#FFFFFF"
+					  backgroundAlpha="0" layout="absolute">
+	
+
+	<fx:Style source="vc.css"/>
+	
+
+	
+	
+	<s:HGroup width="770" height="240" paddingLeft="0" paddingTop="0" verticalAlign="top" columnWidth="380" variableColumnWidth="false" requestedColumnCount="240" x="0" y="0" >
+		
+		
+		<mx:UIComponent width="380" height="240" id="videoCameraContainer" />
+		<mx:UIComponent width="380" height="240" id="videoRemoteContainer"/>
+	</s:HGroup>
+	
+	<s:HGroup width="770" height="30" paddingLeft="0" paddingTop="0" verticalAlign="top" columnWidth="188" variableColumnWidth="false" requestedColumnCount="240" x="0" y="250">
+		<mx:TextInput id="publishName" width="85"/>
+		<mx:Button label="Publish" id="doPublish"/>
+		<mx:TextInput id="subscribeName" width="85"/>
+		<mx:Button label="Play" id="doSubscribe" width="100"/>
+	</s:HGroup>
+	
+	<s:HGroup width="770" height="30" paddingLeft="0" paddingTop="0" verticalAlign="top" columnWidth="380" variableColumnWidth="false" requestedColumnCount="240" x="0" y="306">
+		<mx:TextInput id="connectStr" />
+		<mx:Button label="Connect" id="connectButton" />
+	</s:HGroup>
+	
+	<s:HGroup width="770" height="30" paddingLeft="0" paddingTop="0" verticalAlign="top" columnWidth="380" variableColumnWidth="false" requestedColumnCount="240" x="0" y="350">
+		<mx:Text id="playerVersion" color="#747474" fontSize="10" x="299" y="368"/>
+		<mx:Text id="fpsText" x="342" y="394"/>
+		<mx:Text id="bufferLenText" x="342" y="420"/>
+		<mx:Text id="prompt" height="30" x="211" y="446"/>
+	</s:HGroup>
+
+
+
+</local:ChatController>

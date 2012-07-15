@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Streaming Example Soundmanager</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link href="css/screen.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/lib/prettify.css" rel="stylesheet">
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+		<script type='text/javascript' src='js/lib/prettify.js'></script>
+
+		
+		<!-- soundmanager2 player -->
+		<script type='text/javascript' src='js/lib/soundmanager2.js'></script>
+		
+		
+		
+		
+		<script type="text/javascript">
+		
+		
+		// sm2 player
+		var base = base || {};
+		base.sm2 = base.sm2 || {};
+		base.sm2.player = false;
+		base.util = base.util || {};
+		
+		
+		base.sm2.stations = [
+			{'name': 'Audioasyl','url': 'http://stream.audioasyl.net/audioasyl_low'},
+			{'name': 'RadioX','url': 'http://mp3.radiox.ch:8000/standard.mp3'}
+		];
+		
+		base.sm2.url = false;
+
+		
+		soundManager.setup({
+		  flashVersion: 9,
+		  preferFlash: true,
+		  isMovieStar: true,
+		  useHighPerformance: true,
+		  debugMode: true,
+		  debugFlash: true,
+		  wmode: null,
+		  url: 'swf/lib/'
+		});
+		
+		
+
+		
+		base.sm2.create = function() {
+			
+			// remove sound if existing
+			if(base.sm2.player) {
+				base.sm2.player.destruct();
+			}
+
+		    base.sm2.player = soundManager.createSound({
+				id: 'sm2player', 
+				url: base.sm2.url,
+				type: 'audio/mp3', 
+				autoPlay: false, 
+				stream: true, 
+				autoLoad: true,
+				onconnect: function(bConnect) {
+    				soundManager._writeDebug(this.id+' connected: '+(bConnect?'true':'false'));
+    				this.play();
+  				},
+				whileplaying: function() {
+    				$('#sm2_value_position').val(base.util.ms2time(this.position));
+  				}
+			});
+			
+			// base.sm2.player.play();
+			
+			
+		    
+		};
+
+		$(document).ready(function(){
+			
+			// code display
+			window.prettyPrint && prettyPrint();
+			
+			// base.sm2.url = base.sm2.stations['Audioasyl'];
+
+			// bindings
+			$('.btn#sm2_setup').live('click', function(e){
+				e.preventDefault();
+				base.sm2.create();
+			});
+
+			$('.btn#sm2_play').live('click', function(e){
+				e.preventDefault();
+				if(! base.sm2.player) {
+					alert('Could not find a player :(');
+					return false;
+				}
+				base.sm2.player.play();
+			});
+
+			$('.btn#sm2_pause').live('click', function(e){
+				e.preventDefault();
+				if(! base.sm2.player) {
+					alert('Could not find a player :(');
+					return false;
+				}
+				base.sm2.player.togglePause();
+			});
+
+			$('.btn#sm2_stop').live('click', function(e){
+				e.preventDefault();
+				if(! base.sm2.player) {
+					alert('Could not find a player :(');
+					return false;
+				}
+				base.sm2.player.stop();
+			});
+
+			$('#sm2_options_volume').live('change', function(e){
+				e.preventDefault();
+				var vol = $(this).val();
+				
+				if(vol > 0) {
+					vol = vol * 20;
+				}
+				
+				base.sm2.player.setVolume(vol);
+			});
+			
+			
+			
+			// station setup
+			for (i in base.sm2.stations) {
+				var station = base.sm2.stations[i]
+				if (i == 0) {
+					base.sm2.url = station.url;
+				}
+
+				var option = $('<option>' + station.name + '</option>');
+				$(option).val(i);
+				
+				$('#sm2_options_station').append(option);
+				
+			}
+
+			$('#sm2_options_station').live('change', function(e){
+				e.preventDefault();
+				var station = base.sm2.stations[$(this).val()];
+
+				base.sm2.url = station.url;
+				
+				base.sm2.create();
+
+			});
+			
+
+		});
+		
+		
+		
+		base.util.ms2time = function(msecs) {
+			var t = new Date(1970,0,1);
+			t.setSeconds(Math.floor(msecs/1000));
+			var s = t.toTimeString().substr(0,8);
+			if(msecs > 86399) {
+				s = Math.floor((t - Date.parse("1/1/70")) / 3600000) + s.substr(2);
+			}
+			return s;
+		}
+		
+		</script>
+		
+		
+	</head>
+	<body>
+		<div class="container">
+			
+			
+			
+			
+			<section id="sm2_container">
+				<div class="page-header">
+					<h1>Stream Player <small>Soundmanager2</small></h1>
+				</div>
+				<div class="row">
+					<div class="span8">
+						<div id="sm2-container"><p>Debug Window (flash)</p></div>
+					</div>
+					<div class="span4">
+						<ul class="unstyled horizontal">
+							<li><button id="sm2_setup" class="btn btn-large btn-primary">Player Setup</button>&nbsp;</li>
+							<li><button id="sm2_play" class="btn btn-large btn-success">Play</button>&nbsp;</li>
+							<li><button id="sm2_pause" class="btn btn-large btn-warning">Pause</button>&nbsp;</li>
+							<li><button id="sm2_stop" class="btn btn-large btn-danger">Stop</button></li>
+						</ul>
+						
+						<form class="well">
+						  <label>position</label>
+						  <input id="sm2_value_position" type="text" class="span3" placeholder="...init..." />
+						  
+						  <label>volume</label>
+						  <select id="sm2_options_volume">
+							<option>---</option>
+							<option>0</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+			              </select>
+						  <span>&nbsp;</span>
+						  
+						  <div class="controls">
+						  	  <label>Stations</label>
+				              <select id="sm2_options_station">
+				              </select>
+			              </div>
+						  <span>&nbsp;</span>
+
+						</form>
+						
+					</div>
+				</div>
+				
+
+				<h2 class="pull-right"><small>code</small></h2>
+
+				<div class="row">
+					
+					<div class="span12">
+						
+						<pre class="prettyprint ">
+base.sm2.player = soundManager.createSound({
+	id: 'sm2player', 
+	url: 'http://stream.audioasyl.net/audioasyl_low',
+	type: 'audio/mp3', 
+	autoPlay: false, 
+	stream: true, 
+	autoLoad: true,
+	onconnect: function(bConnect) {
+		soundManager._writeDebug(this.id+' connected: '+(bConnect?'true':'false'));
+		this.play();
+	},
+	whileplaying: function() {
+		$('#sm2_value_position').val(this.position);
+	}
+});
+						</pre>
+						
+					</div>
+					
+				</div>
+			</section>
+			
+			
+			
+			
+			
+			
+		</div>
+	</body>
+	
+	
+	
+</html>

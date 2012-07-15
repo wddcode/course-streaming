@@ -1,0 +1,17 @@
+/* just some hackish additional styles... */
+
+div#jwc {
+	background-color: #333;
+	height: 420px;
+	text-align: center;
+	color: white;
+}
+div#jwc > p {
+	padding-top: 200px;
+}
+
+
+div.flash_debug embed {
+	width: 770px;
+	height: 300px;
+}
