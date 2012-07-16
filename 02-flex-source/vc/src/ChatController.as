@@ -57,7 +57,7 @@ package
 			videoRemote = new Video(380, 240);
 			videoRemoteContainer.addChild(videoRemote);
 			
-			connectStr.text = "rtmp://node06.daj.anorg.net/wddlive";
+			connectStr.text = "rtmp://node06.daj.anorg.net/wddchat";
 			connectButton.addEventListener(MouseEvent.CLICK, doConnect);
 			doPublish.addEventListener(MouseEvent.CLICK, publish);
 			doSubscribe.addEventListener(MouseEvent.CLICK, subscribe);

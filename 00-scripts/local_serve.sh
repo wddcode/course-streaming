@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PORT=8000
+PORT=8080
 
 if [ $1 ]
   then PORT=$1
